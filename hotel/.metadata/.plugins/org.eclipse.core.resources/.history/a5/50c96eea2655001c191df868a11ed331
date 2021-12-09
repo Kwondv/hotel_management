@@ -1,0 +1,81 @@
+package hotel_manage;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JButton;
+import java.awt.Font;
+import javax.swing.JLabel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.io.EOFException;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.SocketException;
+
+public class Hotel_Main extends JFrame {
+
+	private JPanel contentPane;
+
+	public Hotel_Main(hotelDTO dto) {
+		setVisible(true);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 1050, 800);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JButton main_chat_Button = new JButton("\uCC44\uD305");
+		main_chat_Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new ChatServer(dto);
+			}
+		});
+		main_chat_Button.setFont(new Font("나눔스퀘어 Bold", Font.PLAIN, 20));
+		main_chat_Button.setBounds(521, 382, 501, 240);
+		contentPane.add(main_chat_Button);
+		
+		JButton main_check_Button = new JButton("\uC785\uC2E4/\uD1F4\uC2E4");
+		main_check_Button.addActionListener(new ActionListener() {
+			hotelDAO dao = new hotelDAO();
+			public void actionPerformed(ActionEvent e) {
+				/*String yet=dao.yet_checkout(dto);
+				if(yet.equals("yes")) //아직 입관 안 한거면 그냥 소환
+				{
+					new Check_inout(dto);		
+				}else { //입관은 했다면
+					//만약 퇴관시간도 있다면 ->new Check_inout(dto);
+					//퇴관시간이 없다면 -> 입관 세팅
+					new Check_inout(dto);
+				}*/
+				new Check_inout(dto);
+			}
+		});
+		main_check_Button.setFont(new Font("나눔스퀘어 Bold", Font.PLAIN, 20));
+		main_check_Button.setBounds(12, 382, 497, 240);
+		contentPane.add(main_check_Button);
+		
+		JLabel main_label = new JLabel("\uBA54\uC778 \uD654\uBA74");
+		main_label.setFont(new Font("나눔스퀘어 Bold", Font.PLAIN, 30));
+		main_label.setBounds(12, 10, 575, 83);
+		contentPane.add(main_label);
+		
+		JButton main_logout_Button = new JButton("\uB85C\uADF8\uC544\uC6C3");
+		main_logout_Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				hotelDAO dao=new hotelDAO();
+				System.out.println("로그아웃 테스트 + "+dto.getUserID()+","+dto.getPassword()+","+dto.getRoomNumber()+","+dto.getIs_checkin());
+				dao.User_Checkout(dto.getUserID(), dto.getPassword(), dto);
+				dispose();
+			}
+		});
+		main_logout_Button.setFont(new Font("나눔스퀘어 Bold", Font.PLAIN, 20));
+		main_logout_Button.setBounds(833, 10, 189, 59);
+		contentPane.add(main_logout_Button);
+	}
+}
