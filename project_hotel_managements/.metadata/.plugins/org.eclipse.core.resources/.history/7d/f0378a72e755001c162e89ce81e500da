@@ -1,0 +1,54 @@
+package hotel_manage;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.awt.Color;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+
+class hotelDAOTest {
+	@Test
+	void test() {
+		hotelDTO dto=new hotelDTO();
+		hotelDAO dao=new hotelDAO();
+		//dto.getRoomNumber(), dto.getCheckin_time()가 null이 아닌지 확인해보기
+		dto.setUserID("1111");
+		dto.setRoomNumber(111);
+		//
+		JButton check_in_button = new JButton("\uC785\uC2E4\uD558\uAE30");
+		
+		public void changeColor(JButton j, JLabel l, String buttonText, hotelDTO dto) //입실 버튼에서 시간 받아오는 매개변수 넣기
+		{
+			if(buttonText.equals("입실하기")||buttonText.equals("퇴실하기")){
+				j.setBackground(new Color(255,0,0));
+				if(buttonText.equals("입실하기")) {
+					j.setText("입실함");
+					LocalDateTime now = LocalDateTime.now();
+					String formatedNow = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+					dto.setCheckin_time(formatedNow);
+					l.setText(dto.getCheckin_time());
+					update_checkin(dto.getCheckin_time(), buttonText, dto);
+				}else {
+					j.setText("퇴실함");
+					LocalDateTime now = LocalDateTime.now();
+					String formatedNow = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+					dto.setCheckout_time(formatedNow);
+					l.setText(dto.getCheckout_time());
+					update_checkout(dto.getCheckout_time(), buttonText, dto);//입실 버튼에서 시간 받아오는 매개변수 넣기
+				}
+			}
+		}
+		
+		
+		
+		//dao.update_checkin("2021-11-20 17:22:21", "입실함",dto);		
+		assertNotNull(dto.getCheckin_time());
+	}
+
+}
