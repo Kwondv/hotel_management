@@ -1,0 +1,19 @@
+package hotel_manage;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+class hotelDAOTest {
+	
+	@Test
+	void test() {
+		hotelDTO dto=new hotelDTO();
+		hotelDAO dao=new hotelDAO();
+		
+		
+		
+		
+	}
+
+}
